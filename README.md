@@ -113,6 +113,12 @@ ecommerce-api/
 │   │   ├── category.service.ts
 │   │   ├── product.service.ts
 │   │   └── order.service.ts
+|   |── types/
+│   │   ├── auth.types.ts
+│   │   ├── category-types.ts
+│   │   ├── order-types.ts
+│   │   ├── product-types.ts
+│   │   ├── user-types.ts 
 │   ├── utils/
 │   │   ├── app-error.ts
 │   │   └── async-handler.ts

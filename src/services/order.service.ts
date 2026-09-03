@@ -5,19 +5,7 @@ import {
 } from "../models/product.model";
 import { Order, OrderStatus } from "../models/order.model";
 import { AppError } from "../utils/app-error";
-
-interface CreateOrderItemInput {
-    product: string;
-    quantity: number;
-}
-
-interface CreateOrderInput {
-    items: CreateOrderItemInput[];
-}
-
-interface UpdateOrderStatusInput {
-    status: OrderStatus;
-}
+import { CreateOrderInput, UpdateOrderStatusInput } from "../types/order.types";
 
 const allowedStatusTransitions: Record<
     OrderStatus,

@@ -1,38 +1,7 @@
 import { Product } from "../models/product.model";
 import { Category } from "../models/category.model";
 import { AppError } from "../utils/app-error";
-
-interface CreateProductInput {
-    name: string;
-    sku: string;
-    description: string;
-    price: number;
-    salePrice?: number;
-    stock: number;
-    category: string;
-    status?: "active" | "inactive";
-}
-
-interface GetProductsQuery {
-    search?: string;
-    category?: string;
-    minPrice?: number;
-    maxPrice?: number;
-    sort?: string;
-    page?: number;
-    limit?: number;
-}
-
-interface UpdateProductInput {
-    name?: string;
-    sku?: string;
-    description?: string;
-    price?: number;
-    salePrice?: number;
-    stock?: number;
-    category?: string;
-    status?: "active" | "inactive";
-}
+import { CreateProductInput, GetProductsQuery, UpdateProductInput } from "../types/product.types";
 
 const getDescendantCategoryIds = async (
     categoryId: string

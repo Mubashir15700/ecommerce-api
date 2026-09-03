@@ -2,17 +2,7 @@ import { Types } from "mongoose";
 import { Category } from "../models/category.model";
 import { Product } from "../models/product.model";
 import { AppError } from "../utils/app-error";
-
-interface CreateCategoryInput {
-    name: string;
-    parent?: string | null;
-}
-
-interface UpdateCategoryInput {
-    name?: string;
-    parent?: string | null;
-    isActive?: boolean;
-}
+import { CreateCategoryInput, UpdateCategoryInput } from "../types/category.types";
 
 export const createCategory = async ({
     name,

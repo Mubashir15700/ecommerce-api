@@ -1,12 +1,7 @@
 import bcrypt from "bcryptjs";
 import { User } from "../models/user.model";
 import { AppError } from "../utils/app-error";
-
-interface UpdateProfileInput {
-    name?: string;
-    email?: string;
-    password?: string;
-}
+import { UpdateProfileInput } from "../types/user.types";
 
 export const getMyProfile = async (userId: string) => {
     const user = await User.findById(userId).select(

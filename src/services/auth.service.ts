@@ -2,17 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { User, UserRole } from "../models/user.model";
 import { AppError } from "../utils/app-error";
-
-interface RegisterInput {
-    name: string;
-    email: string;
-    password: string;
-}
-
-interface LoginInput {
-    email: string;
-    password: string;
-}
+import { LoginInput, RegisterInput } from "../types/auth.types";
 
 const options: SignOptions = {
     expiresIn: (process.env.JWT_EXPIRES_IN || "1d") as SignOptions["expiresIn"],
