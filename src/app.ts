@@ -4,6 +4,8 @@ import helmet from "helmet";
 
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
+import categoryRoutes from "./routes/category.routes";
+import productRoutes from "./routes/product.routes";
 
 import { apiRateLimiter } from "./middlewares/rate-limit.middleware";
 import { requestLogger } from "./middlewares/logger.middleware";
@@ -20,6 +22,8 @@ app.use(apiRateLimiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/products", productRoutes);
 
 app.get("/api/health", (_req, res) => {
     res.status(200).json({
