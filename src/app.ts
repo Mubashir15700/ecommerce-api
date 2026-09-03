@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
 
 import { apiRateLimiter } from "./middlewares/rate-limit.middleware";
 import { requestLogger } from "./middlewares/logger.middleware";
@@ -18,6 +19,7 @@ app.use(requestLogger);
 app.use(apiRateLimiter);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/api/health", (_req, res) => {
     res.status(200).json({

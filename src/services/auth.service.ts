@@ -71,8 +71,6 @@ export const registerUser = async ({
 export const loginUser = async ({ email, password }: LoginInput) => {
     const user = await User.findOne({ email }).select("+password");
 
-    console.log('user: ', user);
-
     if (!user) {
         throw new AppError("Invalid email or password", 401);
     }
