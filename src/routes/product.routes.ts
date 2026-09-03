@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, getAll, getOne } from "../controllers/product.controller";
+import { create, getAll, getOne, remove, update } from "../controllers/product.controller";
 import {
     authenticate,
     authorize,
@@ -8,7 +8,6 @@ import { UserRole } from "../models/user.model";
 import { asyncHandler } from "../utils/async-handler";
 import { validate } from "../middlewares/validation.middleware";
 import { createProductValidator, updateProductValidator } from "../validators/product.validator";
-import { remove, update } from "../controllers/category.controller";
 
 const router = Router();
 
