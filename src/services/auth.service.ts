@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt, { SignOptions } from "jsonwebtoken";
 import { User, UserRole } from "../models/user.model";
+import { AppError } from "../utils/app-error";
 
 interface RegisterInput {
     name: string;
@@ -42,7 +43,7 @@ export const registerUser = async ({
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-        throw new Error("User already exists");
+        throw new AppError("User already exists", 409);
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -70,18 +71,20 @@ export const registerUser = async ({
 export const loginUser = async ({ email, password }: LoginInput) => {
     const user = await User.findOne({ email }).select("+password");
 
+    console.log('user: ', user);
+
     if (!user) {
-        throw new Error("Invalid email or password");
+        throw new AppError("Invalid email or password", 401);
     }
 
     if (!user.isActive) {
-        throw new Error("User account is inactive");
+        throw new AppError("User account is inactive", 403);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-        throw new Error("Invalid email or password");
+        throw new AppError("Invalid email or password", 401);
     }
 
     const token = generateToken(user._id.toString(), user.role);
