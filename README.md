@@ -79,21 +79,74 @@ Pending → Confirmed → Processing → Shipped → Delivered
 ## Project Structure
 
 ```text
-src/
-├── config/
-├── controllers/
-├── middlewares/
-├── models/
-├── routes/
-├── services/
-├── validators/
-├── app.ts
-└── server.ts
-
-tests/
-├── unit/
-├── integration/
-└── setup.ts
+ecommerce-api/
+├── src/
+│   ├── config/
+│   │   └── database.ts
+│   ├── controllers/
+│   │   ├── auth.controller.ts
+│   │   ├── user.controller.ts
+│   │   ├── category.controller.ts
+│   │   ├── product.controller.ts
+│   │   └── order.controller.ts
+│   ├── middlewares/
+│   │   ├── auth.middleware.ts
+│   │   ├── error.middleware.ts
+│   │   ├── logger.middleware.ts
+│   │   ├── not-found.middleware.ts
+│   │   ├── rate-limit.middleware.ts
+│   │   └── validation.middleware.ts
+│   ├── models/
+│   │   ├── user.model.ts
+│   │   ├── category.model.ts
+│   │   ├── product.model.ts
+│   │   └── order.model.ts
+│   ├── routes/
+│   │   ├── auth.routes.ts
+│   │   ├── user.routes.ts
+│   │   ├── category.routes.ts
+│   │   ├── product.routes.ts
+│   │   └── order.routes.ts
+│   ├── services/
+│   │   ├── auth.service.ts
+│   │   ├── user.service.ts
+│   │   ├── category.service.ts
+│   │   ├── product.service.ts
+│   │   └── order.service.ts
+│   ├── utils/
+│   │   ├── app-error.ts
+│   │   └── async-handler.ts
+│   ├── validators/
+│   │   ├── auth.validator.ts
+│   │   ├── user.validator.ts
+│   │   ├── category.validator.ts
+│   │   ├── product.validator.ts
+│   │   └── order.validator.ts
+│   ├── app.ts
+│   └── server.ts
+├── scripts/
+│   ├── seed-admin.ts
+│   └── seed-data.ts
+├── tests/
+│   ├── unit/
+│   │   └── auth.service.test.ts
+│   ├── integration/
+│   │   ├── auth.test.ts
+│   │   └── order.test.ts
+│   └── setup.ts
+├── postman/
+│   ├── ecommerce-api.postman_collection.json
+│   └── ecommerce-api.postman_environment.json
+├── .env.example
+├── .gitignore
+├── .dockerignore
+├── Dockerfile
+├── docker-compose.yml
+├── jest.config.js
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+└── tsconfig.test.json
 ```
 
 ## Getting Started
@@ -203,13 +256,14 @@ Runs tests and generates a coverage report.
 
 ## API Documentation
 
-Swagger/OpenAPI documentation will be available at:
+Postman collection and environment files are included in the postman/ folder.
 
-```text
-/api-docs
-```
+The folder contains:
 
-once Swagger documentation is configured.
+- Postman collection JSON file
+- Postman environment JSON file
+
+Import both files into Postman to test the API endpoints.
 
 ## Authentication
 
@@ -234,7 +288,6 @@ The project uses:
 
 - Jest for unit testing
 - Supertest for API integration testing
-- MongoDB Memory Server for isolated database testing
 
 Run:
 

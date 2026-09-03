@@ -7,6 +7,7 @@
     "build": "tsc",
     "start": "node dist/src/server.js",
     "seed:admin": "ts-node scripts/seed-admin.ts",
+    "seed:data": "ts-node scripts/seed-data.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
