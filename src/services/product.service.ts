@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Product } from "../models/product.model";
 import { Category } from "../models/category.model";
 import { AppError } from "../utils/app-error";
@@ -6,27 +7,55 @@ import { CreateProductInput, GetProductsQuery, UpdateProductInput } from "../typ
 const getDescendantCategoryIds = async (
     categoryId: string
 ): Promise<string[]> => {
-    const category = await Category.findById(categoryId);
+    if (!mongoose.Types.ObjectId.isValid(categoryId)) {
+        throw new AppError("Invalid category ID", 400);
+    }
 
-    if (!category) {
+    const result = await Category.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(categoryId),
+            },
+        },
+
+        {
+            // selected category
+            //      ↓
+            // its children
+            //      ↓
+            // grandchildren
+            //      ↓
+            // great-grandchildren
+            //      ↓
+            // ...
+            $graphLookup: {
+                from: "categories",
+                startWith: "$_id",
+                connectFromField: "_id",
+                connectToField: "parent",
+                as: "descendants",
+            },
+        },
+
+        {
+            $project: {
+                categoryIds: {
+                    $concatArrays: [
+                        ["$_id"],
+                        "$descendants._id",
+                    ],
+                },
+            },
+        },
+    ]);
+
+    if (result.length === 0) {
         throw new AppError("Category not found", 404);
     }
 
-    const categoryIds = [categoryId];
-    let currentIds = [categoryId];
-
-    while (currentIds.length > 0) {
-        const children = await Category.find({
-            parent: { $in: currentIds },
-        }).select("_id");
-
-        const childIds = children.map((child) => child._id.toString());
-
-        categoryIds.push(...childIds);
-        currentIds = childIds;
-    }
-
-    return categoryIds;
+    return result[0].categoryIds.map(
+        (id: mongoose.Types.ObjectId) => id.toString()
+    );
 };
 
 export const createProduct = async (data: CreateProductInput) => {
